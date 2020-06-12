@@ -1,6 +1,6 @@
 # Albatross
 
-Single-binary web application security scanner 
+Web application security scanner in a single binary
 
 > Water, water, every where, <br/> 
 > Nor any drop to drink.
