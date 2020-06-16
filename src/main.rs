@@ -1,8 +1,5 @@
 use reqwest::Client;
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::io::{BufReader};
-use std::path::Path;
+use reqwest::Response;
 use futures::future::join_all;
 use structopt::StructOpt;
 mod conf;
@@ -16,13 +13,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   let patterns = patterns::get_patterns(target_url);
 
   let client = Client::builder().build()?;
-  let values = futures::future::join_all(
+  let results = join_all(
     patterns.iter()
     .map(|url| {
         client.get(url).send()
     })
   ).await;
 
-  println!("{:#?}", values);
+  let request_count = results.len(); 
+  let warnings: Vec<Response> = results.into_iter().filter_map(|res| res.ok() ).filter(|res| res.status() == 200 ).collect();
+
+  println!("Results:");
+  println!("Requests: {}", request_count);
+  println!("{:#?}", warnings);
   Ok(())
 }
