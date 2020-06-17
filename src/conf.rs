@@ -4,6 +4,6 @@ use structopt::StructOpt;
 #[structopt(name = "albatross")]
 pub struct Opt {
     /// URL to scan
-    #[structopt(short = "t", long = "target", required(true))]
-    pub target_url: String,
+    #[structopt(short = "c", long = "config", required(true))]
+    pub config: String,
 }

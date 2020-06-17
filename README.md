@@ -1,12 +1,28 @@
 # Albatross
 
-Web application security scanner in a single binary
-
-> Water, water, every where, <br/> 
-> Nor any drop to drink.
+Fast, declarative HTTP tests for monitoring and security
 
 ## Usage
 
+### Configuration
+```yaml
+# albatross.yml
+version: 1
+hosts: 
+  - host: https://christianwood.net
+    tests:
+      - path: /
+        status: 200 
+      - path: /admin
+        status: 301 
 ```
-albatross --target mysite.com
+
+### CLI
+```bash
+albatross --config albatross.yml 
+```
+Output:
+```
+Results:
+
 ```
