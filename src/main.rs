@@ -1,10 +1,7 @@
 use reqwest::Client;
-use reqwest::Response;
 use futures::future::join_all;
 use structopt::StructOpt;
 extern crate yaml_rust;
-use yaml_rust::{YamlLoader, YamlEmitter};
-use std::io::ErrorKind;
 mod conf;
 mod http_tests;
 
@@ -16,13 +13,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   if let Ok(tests) = http_tests::parse_tests(config) {
     let client = Client::builder().build()?;
 
-    let results = join_all(
-      tests.iter()
-        .map(|test| {
-            let url = format!("{}{}", test.host, test.path);
-            client.get(&url).send()
-        })
-    ).await;
+    let results = join_all(tests.iter().map(|test| {
+      client.get(&format!("{}{}", test.host, test.path)).send() 
+    })).await;
 
     let request_count = results.len(); 
 

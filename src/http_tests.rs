@@ -1,14 +1,13 @@
 use std::fs;
-use std::io::{self, BufRead, Error};
+use std::io::{Error};
 extern crate yaml_rust;
-use yaml_rust::yaml;
 use yaml_rust::{YamlLoader};
 
 #[derive(Debug)]
 pub struct HTTPTest {
   pub host: String,
   pub path: String,
-  pub status: i64 // this could be smaller
+  pub status: i64 
 } 
 
 pub fn parse_tests(config_path: String) -> Result<Vec<HTTPTest>, Error>  {
@@ -19,7 +18,7 @@ pub fn parse_tests(config_path: String) -> Result<Vec<HTTPTest>, Error>  {
   
   let config = &parsed[0];
 
-  // This is ugly, log failures to parse and clean up to a map structure
+  // TODO: log failures to parse and refactor to a map structure
   if let Some(hosts) = config["hosts"].to_owned().into_vec() {
     for host in hosts {
       let cur_host = host["host"].as_str().unwrap();
@@ -27,7 +26,7 @@ pub fn parse_tests(config_path: String) -> Result<Vec<HTTPTest>, Error>  {
         for test in tests {
           let new_test = HTTPTest {
             host: cur_host.to_string(),
-            path: format!("{}{}", cur_host, test["path"].as_str().unwrap().to_string()),
+            path: test["path"].as_str().unwrap().to_string(),
             status: test["status"].as_i64().unwrap()
           };
   
@@ -36,7 +35,6 @@ pub fn parse_tests(config_path: String) -> Result<Vec<HTTPTest>, Error>  {
       }
     }
   }
-  // println!("{:#?}", mapped_tests);
 
   Ok(mapped_tests)
 }
