@@ -17,10 +17,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
       client.get(&format!("{}{}", test.host, test.path)).send() 
     })).await;
 
+    // Results are in same order, so tests and results are paired
+    let test_results = results.iter().zip(tests.iter());
+
     let request_count = results.len(); 
 
     println!("Requests: {}", request_count);
-    println!("Results {:#?}", results);
+    // println!("Results {:#?}", results);
+    println!("Results {:#?}", test_results);
     Ok(())
   } else {
     eprintln!("Failed to parse configuration");
