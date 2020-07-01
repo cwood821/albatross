@@ -2,6 +2,8 @@
 
 Declarative HTTP tests for monitoring and security
 
+![](https://github.com/cwood821/albatross/workflows/Build/badge.svg)
+
 ## Usage
 
 ### Configuration
