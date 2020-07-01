@@ -1,6 +1,6 @@
 # Albatross
 
-Fast, declarative HTTP tests for monitoring and security
+Declarative HTTP tests for monitoring and security
 
 ## Usage
 
