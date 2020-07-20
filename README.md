@@ -23,8 +23,9 @@ hosts:
 ```bash
 albatross --config albatross.yml 
 ```
+
 Output:
 ```
-Results:
-
+Failures (expected:received)
+https://christianwood.net/admin 301:404
 ```

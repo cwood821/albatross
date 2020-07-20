@@ -33,9 +33,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let request_count = results.len(); 
 
-    println!("Requests: {}", request_count);
-    println!("Failures {:#?}", failures);
-    Ok(())
+    if failures.is_empty() {
+        println!("All tests passed");
+        Ok(())
+    } else {
+        println!("Failures (expected:received)");
+        for failure in failures {
+            println!("{} {}:{}", 
+                failure.0.to_owned().url(), 
+                failure.1.to_owned().status, 
+                failure.0.to_owned().status().as_u16());
+        }
+        // TODO: Return non-zero exit code 
+        Ok(())
+    }
   } else {
     eprintln!("Failed to parse configuration");
     Ok(())

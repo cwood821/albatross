@@ -10,6 +10,16 @@ pub struct HTTPTest {
   pub status: i64 
 } 
 
+/* TODO: Support more generic property testing
+#[derive(Debug)]
+pub struct HTTPTestResult {
+  pub property: String,  
+  pub expected: String,
+  pub received: String,
+  pub passed: bool 
+}
+*/
+
 pub fn parse_tests(config_path: String) -> Result<Vec<HTTPTest>, Error>  {
   let mut mapped_tests: Vec<HTTPTest> = Vec::new();
 
